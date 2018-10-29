@@ -10,17 +10,6 @@ namespace DSBot.Modules
 {
     public class BaseCommands : ModuleBase
     {
-        public static readonly string[] DS = new string[]{ "ds", "ds1", "das", "das1", "dark souls", "darksouls" };
-        public static readonly string[] DSR = new string[] { "dsr", "dsre", "daremaster" };
-        public static readonly string[] DS2 = new string[] { "ds2", "das2", "dark souls 2", "dark souls ii", "darksouls2", "darksoulsii" };
-        public static readonly string[] SCHOLARS = new string[] { "sotfs", "scholar", "scholars", "dark souls 2 scholar of the first sin", "dark souls 2: scholar of the first sin", "dark souls ii scholar of the first sin", "dark souls ii: scholar of the first sin", "ds2softs", "ds2 sotfs", "das2sotfs" };
-        public static readonly string[] DS3 = new string[] { "3", "ds3", "das3", "dark souls 3", "dark souls iii", "darksouls3", "darksoulsiii" };
-        public static readonly string[] XBOX = new string[] { "xb1", "xbone", "xboxone", "xbox1", "xbox one", "one" };
-        public static readonly string[] XBOX360 = new string[] { "xbox 360", "xbox360", "360" };
-        public static readonly string[] PS3 = new string[] { "ps3", "playstation3", "playstation 3" };
-        public static readonly string[] PS4 = new string[] { "ps4", "playstation4", "playstation 4" };
-        public static readonly string[] PC = new string[] { "pc", "steam", "computer" };
-        public static readonly string[] NINTENDO = new string[] { "nintendo", "switch", "nintendo switch", "nintendoswitch" };
         public static List<string> VOICE = new List<string>();
 
         [Command("test", RunMode = RunMode.Async)]
@@ -108,88 +97,31 @@ namespace DSBot.Modules
         }
 
         [Command("platform", RunMode = RunMode.Async), Summary("Assigns a platform!")]
-        public async Task Platform([Summary("Role")]string role)
+        public async Task Platform([Summary("Role")]string platform)
         {
-            try
-            {
-                if (XBOX.Contains(role.ToLower()))
-                {
-                    await (Context.User as IGuildUser).AddRoleAsync(Context.Guild.Roles.Where(y => y.Id.Equals(194775666976227328)).Single());
-                    await ReplyAsync($"`{FirstCharToUpper(role)} role assigned!`");
-                }
-                else if (XBOX360.Contains(role.ToLower()))
-                {
-                    await (Context.User as IGuildUser).AddRoleAsync(Context.Guild.Roles.Where(y => y.Id.Equals(368856344188682240)).Single());
-                    await ReplyAsync($"`{FirstCharToUpper(role)} role assigned!`");
-                }
-                else if (PS3.Contains(role.ToLower()))
-                {
-                    await (Context.User as IGuildUser).AddRoleAsync(Context.Guild.Roles.Where(y => y.Id.Equals(368856640671318016)).Single());
-                    await ReplyAsync($"`{FirstCharToUpper(role)} role assigned!`");
-                }
-                else if (PS4.Contains(role.ToLower()))
-                {
-                    await (Context.User as IGuildUser).AddRoleAsync(Context.Guild.Roles.Where(y => y.Id.Equals(194775718108856320)).Single());
-                    await ReplyAsync($"`{FirstCharToUpper(role)} role assigned!`");
-                }
-                else if (PC.Contains(role.ToLower()))
-                {
-                    await (Context.User as IGuildUser).AddRoleAsync(Context.Guild.Roles.Where(y => y.Id.Equals(194775740162637824)).Single());
-                    await ReplyAsync($"`{FirstCharToUpper(role)} role assigned!`");
-                }
-                else if (NINTENDO.Contains(role.ToLower()))
-                {
-                    await (Context.User as IGuildUser).AddRoleAsync(Context.Guild.Roles.Where(y => y.Id.Equals(401013520637886466)).Single());
-                    await ReplyAsync($"`{FirstCharToUpper(role)} role assigned!`");
-                }
-                else
-                {
-                    await ReplyAsync("`Not found!`");
-                }
-            }
-            catch (Exception e)
-            {
-                await Console.Out.WriteLineAsync(e.ToString());
-            }
+            await TryAssignRole(Roles.Platforms, platform);
         }
 
         [Command("game", RunMode = RunMode.Async), Summary("Assigns a game!")]
         public async Task Game([Summary("Game")]string game)
         {
-            try
-            {
-                if (DS.Contains(game.ToLower()))
-                {
-                    await (Context.User as IGuildUser).AddRoleAsync(Context.Guild.Roles.Where(y => y.Id.Equals(368859767084417024)).Single());
-                    await ReplyAsync($"`{FirstCharToUpper(game)} role assigned!`");
+            await TryAssignRole(Roles.Games, game);
+        }
+
+        public async Task TryAssignRole(Roles.Role[] available, string requested)
+        {
+            try {
+
+                foreach (Roles.Role role in available) {
+                    if (role.descriptors.Contains(requested.ToLower())) {
+                        await (Context.User as IGuildUser).AddRoleAsync(Context.Guild.Roles.Where(y => y.Id.Equals(role.id)).Single());
+                        await ReplyAsync($"`{FirstCharToUpper(requested)} role assigned!`");
+                        return;
+                    }
                 }
-                else if (DS2.Contains(game.ToLower()))
-                {
-                    await (Context.User as IGuildUser).AddRoleAsync(Context.Guild.Roles.Where(y => y.Id.Equals(368857012106166275)).Single());
-                    await ReplyAsync($"`{FirstCharToUpper(game)} role assigned!`");
-                }
-                else if (SCHOLARS.Contains(game.ToLower()))
-                {
-                    await (Context.User as IGuildUser).AddRoleAsync(Context.Guild.Roles.Where(y => y.Id.Equals(368859851293589504)).Single());
-                    await ReplyAsync($"`{FirstCharToUpper(game)} role assigned!`");
-                }
-                else if (DS3.Contains(game.ToLower()))
-                {
-                    await (Context.User as IGuildUser).AddRoleAsync(Context.Guild.Roles.Where(y => y.Id.Equals(368854325516042241)).Single());
-                    await ReplyAsync($"`{FirstCharToUpper(game)} role assigned!`");
-                }
-                else if (DSR.Contains(game.ToLower()))
-                {
-                    await (Context.User as IGuildUser).AddRoleAsync(Context.Guild.Roles.Where(y => y.Id.Equals(428253711857483776)).Single());
-                    await ReplyAsync($"`{FirstCharToUpper(game)} role assigned!`");
-                }
-                else
-                {
-                    await ReplyAsync("`Not found!`");
-                }
-            }
-            catch (Exception e)
-            {
+
+                await ReplyAsync("`Not found!`");
+            } catch (Exception e) {
                 await Console.Out.WriteLineAsync(e.ToString());
             }
         }
