@@ -50,49 +50,10 @@ namespace DSBot.Modules
                 Color = new Color((byte)(Program._ran.Next(255)), (byte)(Program._ran.Next(255)), (byte)(Program._ran.Next(255)))
             }.WithCurrentTimestamp();
             IUserMessage message = await ReplyAsync(string.Empty, embed: builder.Build());
-            if (Emote.TryParse("<:XboxOne:369570227337428993>", out Emote emote1))
+
+            foreach (Emotes.RoleEmote RE in Emotes.RoleEmoteList)
             {
-                await (message as IUserMessage).AddReactionAsync(emote1);
-            }
-            if (Emote.TryParse("<:PS4:368380645858344961>", out Emote emote2))
-            {
-                await (message as IUserMessage).AddReactionAsync(emote2);
-            }
-            if (Emote.TryParse("<:Xbox360:368388223354798081>", out Emote emote3))
-            {
-                await (message as IUserMessage).AddReactionAsync(emote3);
-            }
-            if (Emote.TryParse("<:PS3:368380526253441024>", out Emote emote4))
-            {
-                await (message as IUserMessage).AddReactionAsync(emote4);
-            }
-            if (Emote.TryParse("<:PC:368373647213068300>", out Emote emote5))
-            {
-                await (message as IUserMessage).AddReactionAsync(emote5);
-            }
-            if (Emote.TryParse("<:Switch:368388237367967744>", out Emote emote6))
-            {
-                await (message as IUserMessage).AddReactionAsync(emote6);
-            }
-            if (Emote.TryParse("<:ds1:368332018838405121>", out Emote emote7))
-            {
-                await (message as IUserMessage).AddReactionAsync(emote7);
-            }
-            if (Emote.TryParse("<:tilarbiedoesabetterone:429047962728005642>", out Emote emote8))
-            {
-                await (message as IUserMessage).AddReactionAsync(emote8);
-            }
-            if (Emote.TryParse("<:ds2:368334686319017985>", out Emote emote9))
-            {
-                await (message as IUserMessage).AddReactionAsync(emote9);
-            }
-            if (Emote.TryParse("<:ds2sotfs:368335262377312266>", out Emote emote10))
-            {
-                await (message as IUserMessage).AddReactionAsync(emote10);
-            }
-            if (Emote.TryParse("<:ds3:368334983250837504>", out Emote emote11))
-            {
-                await (message as IUserMessage).AddReactionAsync(emote11);
+                await (message as IUserMessage).AddReactionAsync(RE.emote);
             }
         }
 

@@ -121,80 +121,11 @@ To see and speak in this server, please click on the following emojis to apply r
         private async Task _client_ReactionAdded(Cacheable<IUserMessage, ulong> message, ISocketMessageChannel channel, SocketReaction reaction)
         {
             if (!reaction.UserId.Equals(_client.CurrentUser.Id) && channel.Id.Equals(369216525825212416)) {
-                if (Emote.TryParse("<:XboxOne:369570227337428993>", out Emote emote1)) {
-                    if (reaction.Emote.Name.Equals(emote1.Name))
-                    {
-                        await (reaction.User.Value as IGuildUser).AddRoleAsync((channel as IGuildChannel).Guild.Roles.Where(y => y.Id.Equals(194775666976227328)).Single());
-                    }
-                }
-                if (Emote.TryParse("<:PS4:368380645858344961>", out Emote emote2))
-                {
-                    if (reaction.Emote.Name.Equals(emote2.Name))
-                    {
-                        await (reaction.User.Value as IGuildUser).AddRoleAsync((channel as IGuildChannel).Guild.Roles.Where(y => y.Id.Equals(194775718108856320)).Single());
-                    }
-                }
-                if (Emote.TryParse("<:Xbox360:368388223354798081>", out Emote emote3))
-                {
-                    if (reaction.Emote.Name.Equals(emote3.Name))
-                    {
-                        await (reaction.User.Value as IGuildUser).AddRoleAsync((channel as IGuildChannel).Guild.Roles.Where(y => y.Id.Equals(368856344188682240)).Single());
-                    }
-                }
-                if (Emote.TryParse("<:PS3:368380526253441024>", out Emote emote4))
-                {
-                    if (reaction.Emote.Name.Equals(emote4.Name))
-                    {
-                        await (reaction.User.Value as IGuildUser).AddRoleAsync((channel as IGuildChannel).Guild.Roles.Where(y => y.Id.Equals(368856640671318016)).Single());
-                    }
-                }
-                if (Emote.TryParse("<:PC:368373647213068300>", out Emote emote5))
-                {
-                    if (reaction.Emote.Name.Equals(emote5.Name))
-                    {
-                        await (reaction.User.Value as IGuildUser).AddRoleAsync((channel as IGuildChannel).Guild.Roles.Where(y => y.Id.Equals(194775740162637824)).Single());
-                    }
-                }
-                if (Emote.TryParse("<:Switch:368388237367967744>", out Emote emote6))
-                {
-                    if (reaction.Emote.Name.Equals(emote6.Name))
-                    {
-                        await (reaction.User.Value as IGuildUser).AddRoleAsync((channel as IGuildChannel).Guild.Roles.Where(y => y.Id.Equals(401013520637886466)).Single());
-                    }
-                }
-                if (Emote.TryParse("<:ds1:368332018838405121>", out Emote emote7))
-                {
-                    if (reaction.Emote.Name.Equals(emote7.Name))
-                    {
-                        await (reaction.User.Value as IGuildUser).AddRoleAsync((channel as IGuildChannel).Guild.Roles.Where(y => y.Id.Equals(368859767084417024)).Single());
-                    }
-                }
-                if (Emote.TryParse("<:tilarbiedoesabetterone:429047962728005642>", out Emote emote8))
-                {
-                    if (reaction.Emote.Name.Equals(emote8.Name))
-                    {
-                        await (reaction.User.Value as IGuildUser).AddRoleAsync((channel as IGuildChannel).Guild.Roles.Where(y => y.Id.Equals(428253711857483776)).Single());
-                    }
-                }
-                if (Emote.TryParse("<:ds2:368334686319017985>", out Emote emote9))
-                {
-                    if (reaction.Emote.Name.Equals(emote9.Name))
-                    {
-                        await (reaction.User.Value as IGuildUser).AddRoleAsync((channel as IGuildChannel).Guild.Roles.Where(y => y.Id.Equals(368857012106166275)).Single());
-                    }
-                }
-                if (Emote.TryParse("<:ds2sotfs:368335262377312266>", out Emote emote10))
-                {
-                    if (reaction.Emote.Name.Equals(emote10.Name))
-                    {
-                        await (reaction.User.Value as IGuildUser).AddRoleAsync((channel as IGuildChannel).Guild.Roles.Where(y => y.Id.Equals(368859851293589504)).Single());
-                    }
-                }
-                if (Emote.TryParse("<:ds3:368334983250837504>", out Emote emote11))
-                {
-                    if (reaction.Emote.Name.Equals(emote11.Name))
-                    {
-                        await (reaction.User.Value as IGuildUser).AddRoleAsync((channel as IGuildChannel).Guild.Roles.Where(y => y.Id.Equals(368854325516042241)).Single());
+
+                foreach (Emotes.RoleEmote RE in Emotes.RoleEmoteList) {
+                    if (reaction.Emote.Name.Equals(RE.emote.Name)) {
+                        await (reaction.User.Value as IGuildUser).AddRoleAsync((channel as IGuildChannel).Guild.Roles.Where(y => y.Id.Equals(RE.role.id)).Single());
+                        break;
                     }
                 }
             }
@@ -204,81 +135,12 @@ To see and speak in this server, please click on the following emojis to apply r
         {
             if (channel.Id.Equals(369216525825212416))
             {
-                if (Emote.TryParse("<:XboxOne:369570227337428993>", out Emote emote1))
+                foreach (Emotes.RoleEmote RE in Emotes.RoleEmoteList)
                 {
-                    if (reaction.Emote.Name.Equals(emote1.Name))
+                    if (reaction.Emote.Name.Equals(RE.emote.Name))
                     {
-                        await (reaction.User.Value as IGuildUser).RemoveRoleAsync((channel as IGuildChannel).Guild.Roles.Where(y => y.Id.Equals(194775666976227328)).Single());
-                    }
-                }
-                if (Emote.TryParse("<:PS4:368380645858344961>", out Emote emote2))
-                {
-                    if (reaction.Emote.Name.Equals(emote2.Name))
-                    {
-                        await (reaction.User.Value as IGuildUser).RemoveRoleAsync((channel as IGuildChannel).Guild.Roles.Where(y => y.Id.Equals(194775718108856320)).Single());
-                    }
-                }
-                if (Emote.TryParse("<:Xbox360:368388223354798081>", out Emote emote3))
-                {
-                    if (reaction.Emote.Name.Equals(emote3.Name))
-                    {
-                        await (reaction.User.Value as IGuildUser).RemoveRoleAsync((channel as IGuildChannel).Guild.Roles.Where(y => y.Id.Equals(368856344188682240)).Single());
-                    }
-                }
-                if (Emote.TryParse("<:PS3:368380526253441024>", out Emote emote4))
-                {
-                    if (reaction.Emote.Name.Equals(emote4.Name))
-                    {
-                        await (reaction.User.Value as IGuildUser).RemoveRoleAsync((channel as IGuildChannel).Guild.Roles.Where(y => y.Id.Equals(368856640671318016)).Single());
-                    }
-                }
-                if (Emote.TryParse("<:PC:368373647213068300>", out Emote emote5))
-                {
-                    if (reaction.Emote.Name.Equals(emote5.Name))
-                    {
-                        await (reaction.User.Value as IGuildUser).RemoveRoleAsync((channel as IGuildChannel).Guild.Roles.Where(y => y.Id.Equals(194775740162637824)).Single());
-                    }
-                }
-                if (Emote.TryParse("<:Switch:368388237367967744>", out Emote emote6))
-                {
-                    if (reaction.Emote.Name.Equals(emote6.Name))
-                    {
-                        await (reaction.User.Value as IGuildUser).RemoveRoleAsync((channel as IGuildChannel).Guild.Roles.Where(y => y.Id.Equals(401013520637886466)).Single());
-                    }
-                }
-                if (Emote.TryParse("<:ds1:368332018838405121>", out Emote emote7))
-                {
-                    if (reaction.Emote.Name.Equals(emote7.Name))
-                    {
-                        await (reaction.User.Value as IGuildUser).RemoveRoleAsync((channel as IGuildChannel).Guild.Roles.Where(y => y.Id.Equals(368859767084417024)).Single());
-                    }
-                }
-                if (Emote.TryParse("<:tilarbiedoesabetterone:429047962728005642>", out Emote emote8))
-                {
-                    if (reaction.Emote.Name.Equals(emote8.Name))
-                    {
-                        await (reaction.User.Value as IGuildUser).RemoveRoleAsync((channel as IGuildChannel).Guild.Roles.Where(y => y.Id.Equals(428253711857483776)).Single());
-                    }
-                }
-                if (Emote.TryParse("<:ds2:368334686319017985>", out Emote emote9))
-                {
-                    if (reaction.Emote.Name.Equals(emote9.Name))
-                    {
-                        await (reaction.User.Value as IGuildUser).RemoveRoleAsync((channel as IGuildChannel).Guild.Roles.Where(y => y.Id.Equals(368857012106166275)).Single());
-                    }
-                }
-                if (Emote.TryParse("<:ds2sotfs:368335262377312266>", out Emote emote10))
-                {
-                    if (reaction.Emote.Name.Equals(emote10.Name))
-                    {
-                        await (reaction.User.Value as IGuildUser).RemoveRoleAsync((channel as IGuildChannel).Guild.Roles.Where(y => y.Id.Equals(368859851293589504)).Single());
-                    }
-                }
-                if (Emote.TryParse("<:ds3:368334983250837504>", out Emote emote11))
-                {
-                    if (reaction.Emote.Name.Equals(emote11.Name))
-                    {
-                        await (reaction.User.Value as IGuildUser).RemoveRoleAsync((channel as IGuildChannel).Guild.Roles.Where(y => y.Id.Equals(368854325516042241)).Single());
+                        await (reaction.User.Value as IGuildUser).RemoveRoleAsync((channel as IGuildChannel).Guild.Roles.Where(y => y.Id.Equals(RE.role.id)).Single());
+                        break;
                     }
                 }
             }
