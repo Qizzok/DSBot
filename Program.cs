@@ -1,12 +1,13 @@
 ﻿using System;
+using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
-using Discord;
-using Discord.Commands;
-using Discord.WebSocket;
 using System.Linq;
 using System.Collections.Generic;
 using Microsoft.Extensions.DependencyInjection;
+using Discord;
+using Discord.Commands;
+using Discord.WebSocket;
 
 namespace DSBot
 {
@@ -18,7 +19,8 @@ namespace DSBot
         public static DiscordSocketClient _client;
         public static Random _ran = new Random();
         private IServiceProvider _services;
-        public static readonly string TEXT1 = @"Brave Undead, welcome to the partnered **Dark Souls** Discord. Please, take your time to read the <#389199668111998977> channel.
+        public static readonly string TEXT1 =
+@"Brave Undead, welcome to the partnered **Dark Souls** Discord. Please, take your time to read the <#389199668111998977> channel.
 
 To see and speak in this server, perform the following actions in the <#194771543992041472> channel:
     1) Use the `!platform` command to tag  what platform(s) you play on to gain access to matchmaking channels. e.g. `!platform PC`
@@ -41,7 +43,9 @@ To see and speak in this server, perform the following actions in the <#19477154
 *If you come across any issue while following these steps, please contact one of our moderators*.
 
 Remember to check out <#389199668111998977> for more details on how this server works!";
-        public static readonly string TEXT2 = @"Brave Undead, welcome to the partnered **Dark Souls** Discord. Please, take your time to read the <#389199668111998977> channel.
+
+        public static readonly string TEXT2 =
+@"Brave Undead, welcome to the partnered **Dark Souls** Discord. Please, take your time to read the <#389199668111998977> channel.
 *If you come across any issue while following these steps, please contact one of our moderators and manually apply your roles via the* <#194771543992041472> *channel*.
 
 To see and speak in this server, please click on the following emojis to apply roles for which:
@@ -82,8 +86,8 @@ To see and speak in this server, please click on the following emojis to apply r
 
             await InstallCommands();
             ConfigureEventHandlers();
-
-            await _client.LoginAsync(TokenType.Bot, "REDACTED");
+            
+            await _client.LoginAsync(TokenType.Bot, File.ReadAllText("Token.txt"));
             await _client.StartAsync();
         }
 
@@ -97,7 +101,7 @@ To see and speak in this server, please click on the following emojis to apply r
         private async Task HandleCommand(SocketMessage arg)
         {
             var message = arg as SocketUserMessage;
-            if (message == null || arg.Author.IsBot)
+            if (message == null || arg.Author.IsBot || !(message.Channel is IGuildChannel && (message.Channel as IGuildChannel).GuildId == DiscordIds.GetId("SERVER")))
             {
                 return;
             }
@@ -120,7 +124,7 @@ To see and speak in this server, please click on the following emojis to apply r
 
         private async Task _client_ReactionAdded(Cacheable<IUserMessage, ulong> message, ISocketMessageChannel channel, SocketReaction reaction)
         {
-            if (!reaction.UserId.Equals(_client.CurrentUser.Id) && channel.Id.Equals(369216525825212416)) {
+            if (!reaction.UserId.Equals(_client.CurrentUser.Id) && channel.Id.Equals(DiscordIds.GetId("ROLES"))) {
 
                 foreach (Emotes.RoleEmote RE in Emotes.RoleEmoteList) {
                     if (reaction.Emote.Name.Equals(RE.emote.Name)) {
@@ -133,7 +137,7 @@ To see and speak in this server, please click on the following emojis to apply r
 
         private async Task _client_ReactionRemoved(Cacheable<IUserMessage, ulong> message, ISocketMessageChannel channel, SocketReaction reaction)
         {
-            if (channel.Id.Equals(369216525825212416))
+            if (channel.Id.Equals(DiscordIds.GetId("ROLES")))
             {
                 foreach (Emotes.RoleEmote RE in Emotes.RoleEmoteList)
                 {

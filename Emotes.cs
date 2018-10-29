@@ -20,7 +20,7 @@ namespace DSBot {
                 RoleEmoteList = new RoleEmote[]
                 {
                     new RoleEmote(Emote.Parse("<:ds1:368332018838405121>"), Roles.DS1),
-                    new RoleEmote(Emote.Parse("<:tilarbiedoesabetterone:429047962728005642>"), Roles.DSR),
+                    new RoleEmote(Emote.Parse("<:ds1r:488412792207179797>"), Roles.DSR),
                     new RoleEmote(Emote.Parse("<:ds2:368334686319017985>"), Roles.DS2),
                     new RoleEmote(Emote.Parse("<:ds2sotfs:368335262377312266>"), Roles.SOTFS),
                     new RoleEmote(Emote.Parse("<:ds3:368334983250837504>"), Roles.DS3),
