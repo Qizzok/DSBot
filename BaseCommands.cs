@@ -60,29 +60,62 @@ namespace DSBot.Modules
         [Command("platform", RunMode = RunMode.Async), Summary("Assigns a platform!")]
         public async Task Platform([Remainder, Summary("Platform")] string platform)
         {
-            await TryAssignRole(Roles.Platforms, platform);
+            await TryToggleRole(Roles.Platforms, platform);
         }
 
         [Command("game", RunMode = RunMode.Async), Summary("Assigns a game!")]
         public async Task Game([Remainder, Summary("Game")] string game)
         {
-            await TryAssignRole(Roles.Games, game);
+            await TryToggleRole(Roles.Games, game);
         }
 
-        public async Task TryAssignRole(Roles.Role[] available, string requested)
+        public async Task TryToggleRole(Roles.Role[] available, string requested)
         {
-            try {
-
-                foreach (Roles.Role role in available) {
-                    if (role.descriptors.Contains(requested.ToLower())) {
-                        await (Context.User as IGuildUser).AddRoleAsync(Context.Guild.Roles.Where(y => y.Id.Equals(role.id)).Single());
-                        await ReplyAsync($"`{FirstCharToUpper(requested)} role assigned!`");
+            try
+            {
+                foreach (Roles.Role role in available)
+                {
+                    if (role.descriptors.Contains(requested.ToLower()))
+                    {
+                        if ((Context.User as IGuildUser).RoleIds.Contains(role.id))
+                        {
+                            await (Context.User as IGuildUser).RemoveRoleAsync(Context.Guild.Roles.Where(y => y.Id.Equals(role.id)).Single());
+                            await ReplyAsync($"`{FirstCharToUpper(requested)} role removed!`");
+                        }
+                        else
+                        {
+                            await (Context.User as IGuildUser).AddRoleAsync(Context.Guild.Roles.Where(y => y.Id.Equals(role.id)).Single());
+                            await ReplyAsync($"`{FirstCharToUpper(requested)} role assigned!`");
+                        }
                         return;
                     }
                 }
-
                 await ReplyAsync("`Not found!`");
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
+                await Console.Out.WriteLineAsync(e.ToString());
+            }
+        }
+
+        [Command("remove", RunMode = RunMode.Async), Summary("Removes a game or platform role")]
+        public async Task Remove([Remainder, Summary("Role")] string requested)
+        {
+            try
+            {
+                foreach (Roles.Role role in Roles.All)
+                {
+                    if (role.descriptors.Contains(requested.ToLower()))
+                    {
+                        await (Context.User as IGuildUser).RemoveRoleAsync(Context.Guild.Roles.Where(y => y.Id.Equals(role.id)).Single());
+                        await ReplyAsync($"`{FirstCharToUpper(requested)} role removed!`");
+                        return;
+                    }
+                }
+                await ReplyAsync("`Not found!`");
+            }
+            catch (Exception e)
+            {
                 await Console.Out.WriteLineAsync(e.ToString());
             }
         }
