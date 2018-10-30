@@ -58,13 +58,13 @@ namespace DSBot.Modules
         }
 
         [Command("platform", RunMode = RunMode.Async), Summary("Assigns a platform!")]
-        public async Task Platform([Summary("Role")]string platform)
+        public async Task Platform([Remainder, Summary("Platform")] string platform)
         {
             await TryAssignRole(Roles.Platforms, platform);
         }
 
         [Command("game", RunMode = RunMode.Async), Summary("Assigns a game!")]
-        public async Task Game([Summary("Game")]string game)
+        public async Task Game([Remainder, Summary("Game")] string game)
         {
             await TryAssignRole(Roles.Games, game);
         }
@@ -88,7 +88,7 @@ namespace DSBot.Modules
         }
 
         [Command("username", RunMode = RunMode.Async), Summary("Assigns a username!"), RequireOwner()]
-        public async Task Name([Summary("Name")]string name)
+        public async Task Name([Summary("Name")] string name)
         {
             Action<SelfUserProperties> action = delegate (SelfUserProperties x) { x.Username = name; };
             await Program._client.CurrentUser.ModifyAsync(action);
