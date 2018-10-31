@@ -10,6 +10,28 @@ namespace DSBot.Modules
 {
     public class BaseCommands : ModuleBase
     {
+        private static readonly string Roles_Message =
+@"Brave Undead, welcome to the partnered **Dark Souls** Discord. Please, take your time to read the <#497782061239762957> and <#506533532202696704> channels.
+
+To see channels and speak in this server, please click on the following emoji to apply roles:
+    
+__Dark Souls games that you own__
+    **I** - If you own the original Dark Souls
+    **DSR** - If you own Dark Souls: Remastered
+    **II** - If you own the DX9 versions of Dark Souls II
+    **SotFS** - If you own the DX11 version of Dark Souls II: Scholar of the First Sin
+    **III** - If you own Dark Souls III
+
+__Platforms you use__
+    **360** - I play on Xbox 360
+    **One** - I play on Xbox One
+    **PS3** - I play on PlayStation 3
+    **PS4** - I play on PlayStation 4
+    **PC** - I play on PC
+    **Switch** - I play on Nintendo Switch
+
+You can also manually apply your roles via the <#194771543992041472> channel. If you come across any issue while following these steps, please contact one of our moderators.";
+
         public static List<string> VOICE = new List<string>();
 
         [Command("test", RunMode = RunMode.Async)]
@@ -44,7 +66,7 @@ namespace DSBot.Modules
             await Context.Message.DeleteAsync();
             EmbedBuilder builder = new EmbedBuilder()
             {
-                Description = Program.TEXT2,
+                Description = Roles_Message,
                 ThumbnailUrl = Context.Guild.IconUrl,
                 Author = new EmbedAuthorBuilder() { IconUrl = Context.Guild.IconUrl, Name = $"Welcome to the partnered Dark Souls Discord!" },
                 Color = new Color((byte)(Program._ran.Next(255)), (byte)(Program._ran.Next(255)), (byte)(Program._ran.Next(255)))

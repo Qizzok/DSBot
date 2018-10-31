@@ -20,50 +20,24 @@ namespace DSBot
         public static Random _ran = new Random();
         private IServiceProvider _services;
         public static readonly string TEXT1 =
-@"Brave Undead, welcome to the partnered **Dark Souls** Discord. Please, take your time to read the <#389199668111998977> channel.
+@"Brave Undead, welcome to the partnered **Dark Souls** Discord. Please, take your time to read the <#497782061239762957> and <#506533532202696704> channels.
 
-To see and speak in this server, perform the following actions in the <#194771543992041472> channel:
-    1) Use the `!platform` command to tag  what platform(s) you play on to gain access to matchmaking channels. e.g. `!platform PC`
-    → Available platform roles:
-        Switch
-        One
-        PS4
-        360
-        PS3
-        PC
-
-    2) Use the `!game` command to tag which Dark Souls games you play/own to gain access to that game's channels. e.g. `!game sotfs`
-    → Available videogame roles:
-        DS 
+To see and speak in this server, add reactions for the roles you want in the <#369216525825212416> channel:
+    → Available game roles:
+        DS1
         DSR
         DS2
         SotFS
         DS3
+    → Available platform roles:
+        Xbox 360
+        Xbox One
+        PS3
+        PS4
+        PC
+        Switch
 
-*If you come across any issue while following these steps, please contact one of our moderators*.
-
-Remember to check out <#389199668111998977> for more details on how this server works!";
-
-        public static readonly string TEXT2 =
-@"Brave Undead, welcome to the partnered **Dark Souls** Discord. Please, take your time to read the <#389199668111998977> channel.
-*If you come across any issue while following these steps, please contact one of our moderators and manually apply your roles via the* <#194771543992041472> *channel*.
-
-To see and speak in this server, please click on the following emojis to apply roles for which:
-    1) Platforms you play Dark Souls videogames on
-        Switchemote - I play on Nintendo Switch
-        One - I play on Xbox One 
-        PS4 - I play on PlayStation 4
-        360 - I play on Xbox 360
-        PS3 - I play on PlayStation 3
-        PC - I play on PC
-        Switch - I play on Nintendo Switch
-
-    2) Dark Souls videogames that you own
-        DSemote - If you own the original Dark Souls
-        DSRemote - If you own Dark Souls: Remastered
-        DS2emote - If you own the DX9 versions of Dark Souls II
-        SotFSemote If you own the DX11 version of Dark Souls II: Scholar of the First Sin
-        DS3emote - If you own Dark Souls III";
+*If you come across any issue while following these steps, please contact one of our moderators*.";
 
         public async Task Start(string[] args)
         {
