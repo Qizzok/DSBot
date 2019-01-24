@@ -1,8 +1,6 @@
 ﻿using Discord.Commands;
 using Discord;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using System.Linq;
 
@@ -32,32 +30,11 @@ __Platforms you use__
 
 You can also manually apply your roles via the <#194771543992041472> channel. If you come across any issue while following these steps, please contact one of our moderators.";
 
-        public static List<string> VOICE = new List<string>();
-
         [Command("test", RunMode = RunMode.Async)]
         public async Task _test()
         {
             await Console.Out.WriteLineAsync("Pass!");
             await ReplyAsync("test");
-        }
-
-        [Command("bonfire", RunMode = RunMode.Async)]
-        public async Task _bonfire([Summary("Name"), Remainder()]string name = "Bonfire")
-        {
-            try
-            {
-                await Context.Message.DeleteAsync();
-                VOICE.Add(name);
-                IVoiceChannel channel = await Context.Guild.CreateVoiceChannelAsync(name);
-                IReadOnlyCollection<ICategoryChannel> col1 = await Context.Guild.GetCategoriesAsync();
-                Action<VoiceChannelProperties> action = delegate (VoiceChannelProperties x) { x.CategoryId = col1.Where(y => y.Name.ToLower().Equals("voice channels")).FirstOrDefault().Id; x.Position = (VOICE.Count.Equals(1) ? 1 : VOICE.Count - 1); };//(VOICE.Count.Equals(1) ? 1 : VOICE.Count - 1)  VOICE.Count
-                await channel.ModifyAsync(action);
-                //await _check(channel);
-            }
-            catch (Exception e)
-            {
-                await Console.Out.WriteLineAsync(e.ToString());
-            }
         }
 
         [Command("dswelcome", RunMode = RunMode.Async)]
@@ -147,20 +124,6 @@ You can also manually apply your roles via the <#194771543992041472> channel. If
         {
             Action<SelfUserProperties> action = delegate (SelfUserProperties x) { x.Username = name; };
             await Program._client.CurrentUser.ModifyAsync(action);
-        }
-
-        private async Task _check(IVoiceChannel channel)
-        {
-            await Task.Delay(10000);
-            while (true)
-            {
-                if (await channel.GetUsersAsync().Count() == 0)
-                {
-                    await channel.DeleteAsync(new RequestOptions() { AuditLogReason = "Empty" });
-                    break;
-                }
-                await Task.Delay(10000);
-            }
         }
 
         public static string FirstCharToUpper(string arg) => (String.IsNullOrEmpty(arg) ? throw new ArgumentException("ARGH!") : arg.First().ToString().ToUpper() + arg.Substring(1));

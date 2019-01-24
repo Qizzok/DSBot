@@ -3,7 +3,6 @@ using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Linq;
-using System.Collections.Generic;
 using Microsoft.Extensions.DependencyInjection;
 using Discord;
 using Discord.Commands;
@@ -74,7 +73,7 @@ To see and speak in this server, add reactions for the roles you want in the <#3
 
         private async Task HandleCommand(SocketMessage arg)
         {
-            var message = arg as SocketUserMessage;
+            SocketUserMessage message = arg as SocketUserMessage;
             if (message == null || arg.Author.IsBot || !(message.Channel is IGuildChannel && (message.Channel as IGuildChannel).GuildId == DiscordIds.GetId("SERVER")))
             {
                 return;
@@ -141,10 +140,9 @@ To see and speak in this server, add reactions for the roles you want in the <#3
         {
             var vc = arg2.VoiceChannel ?? arg3.VoiceChannel;
             if (!vc.Users.Contains(arg1 as SocketGuildUser)) {
-                if (vc.Users.Count < 1 && Modules.BaseCommands.VOICE.Contains(vc.Name))
+                if (vc.Users.Count < 1)
                 {
-                    await vc.DeleteAsync();
-                    Modules.BaseCommands.VOICE.Remove(vc.Name);
+                    await Modules.Bonfire.HandleEmptyChannel(vc);
                 }
             }
         }

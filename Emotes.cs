@@ -39,5 +39,6 @@ namespace DSBot {
         }
 
         public static RoleEmote[] RoleEmoteList { get; private set; } = new RoleEmote[] { };
+        public static Emote Bonfire { get; private set; } = Emote.Parse("<:Bonfire:233201895609466880>");
     }
 }
