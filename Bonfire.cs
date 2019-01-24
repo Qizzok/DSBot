@@ -45,6 +45,7 @@ namespace DSBot.Modules {
                 };
                 await newChannel.ModifyAsync(action);
                 await ReplyAsync($"{Emotes.Bonfire} **{Context.User.Username}**, your bonfire has been lit.");
+                DeleteIfStillEmpty(newChannel);
             } catch (Exception e) {
                 await Console.Out.WriteLineAsync(e.ToString());
             }
@@ -104,6 +105,18 @@ namespace DSBot.Modules {
             if (bonfires.ContainsValue(vc.Id)) {
                 bonfires.Remove(bonfires.Where(kvp => kvp.Value == vc.Id).First().Key);
                 await vc.DeleteAsync(new RequestOptions() { AuditLogReason = "User-created channel empty" });
+            }
+        }
+
+        public static async Task DeleteIfStillEmpty(IVoiceChannel vc) {
+            await Task.Delay(20000);
+            try {
+                if (vc != null && bonfires.ContainsValue(vc.Id) && await vc.GetUsersAsync().Count() == 0) {
+                    bonfires.Remove(bonfires.Where(kvp => kvp.Value == vc.Id).First().Key);
+                    await vc.DeleteAsync(new RequestOptions() { AuditLogReason = "No users joined after 20 seconds." });
+                }
+            } catch (Exception e) {
+                await Console.Out.WriteLineAsync(e.ToString());
             }
         }
     }
