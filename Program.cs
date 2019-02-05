@@ -139,11 +139,11 @@ To see and speak in this server, add reactions for the roles you want in the <#3
         private async Task _client_UserVoiceStateUpdated(SocketUser arg1, SocketVoiceState arg2, SocketVoiceState arg3)
         {
             var vc = arg2.VoiceChannel ?? arg3.VoiceChannel;
-            if (!vc.Users.Contains(arg1 as SocketGuildUser)) {
-                if (vc.Users.Count < 1)
-                {
-                    await Modules.Bonfire.HandleEmptyChannel(vc);
-                }
+            if (vc.Users.Contains(arg1 as SocketGuildUser)) {
+                Modules.Bonfire.HandleUserJoin(vc);
+            } else if (vc.Users.Count < 1)
+            {
+                await Modules.Bonfire.HandleEmptyChannel(vc);
             }
         }
 

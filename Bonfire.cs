@@ -13,6 +13,7 @@ namespace DSBot.Modules {
 
         //Mapping from user ID to channel ID
         public static Dictionary<ushort, ulong> bonfires = new Dictionary<ushort, ulong>();
+        public static List<ulong> unjoined = new List<ulong>();
         
         [Command(RunMode = RunMode.Async)]
         public async Task _bonfireEmpty() {
@@ -45,7 +46,8 @@ namespace DSBot.Modules {
                 };
                 await newChannel.ModifyAsync(action);
                 await ReplyAsync($"{Emotes.Bonfire} **{Context.User.Username}**, your bonfire has been lit.");
-                DeleteIfStillEmpty(newChannel);
+                unjoined.Add(newChannel.Id);
+                await DeleteIfStillEmpty(newChannel);
             } catch (Exception e) {
                 await Console.Out.WriteLineAsync(e.ToString());
             }
@@ -108,11 +110,18 @@ namespace DSBot.Modules {
             }
         }
 
+        public static void HandleUserJoin(SocketVoiceChannel vc) {
+            if(unjoined.Contains(vc.Id)) {
+                unjoined.Remove(vc.Id);
+            }
+        }
+
         public static async Task DeleteIfStillEmpty(IVoiceChannel vc) {
             await Task.Delay(20000);
             try {
-                if (vc != null && bonfires.ContainsValue(vc.Id) && await vc.GetUsersAsync().Count() == 0) {
+                if (vc != null && bonfires.ContainsValue(vc.Id) && unjoined.Contains(vc.Id)) {
                     bonfires.Remove(bonfires.Where(kvp => kvp.Value == vc.Id).First().Key);
+                    unjoined.Remove(vc.Id);
                     await vc.DeleteAsync(new RequestOptions() { AuditLogReason = "No users joined after 20 seconds." });
                 }
             } catch (Exception e) {
